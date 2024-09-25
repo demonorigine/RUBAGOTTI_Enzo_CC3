@@ -103,5 +103,15 @@ Le script de développement permet au développeur d'avoir plus de ressources po
 Pour chaque page, on obtient:
 
 ```
+http://localhost:8000/index.html
+Code 200
 
+http://localhost:8000/random.html
+Code 200
+
+http://localhost:8000/
+Code 404
+
+http://localhost:8000/dont-exist
+Code 404
 ```

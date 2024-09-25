@@ -1,24 +1,28 @@
 import express from "express";
 import morgan from "morgan";
+import createError from 'http-errors';
+
 
 const host = "localhost";
 const port = 8000;
 
 const app = express();
 
-//middleware pour trouver le chemin des fichiers static
+// middleware pour trouver le chemin des fichiers static
 app.use(express.static("static"));
 
-//moteur de rendu par défaut
+// moteur de rendu par défaut
 app.set("view engine", "ejs");
 
-
-app.get(["/", "/index.html"], async function (request, response, next) {
-  response.sendFile("index.html", { root: "./" });
-});
-
+// route /random/:nb
 app.get("/random/:nb", async function (request, response, next) {
-  const length = parseInt(request.params.nb, 10);
+  // On convertit le paramètre en nombre entier
+  const length = Number.parseInt(request.params.nb, 10);
+
+  // On vérifie si le paramètre est un nombre valide
+  if (Number.isNaN(length)) {
+    return next(createError(400, "Le paramètre n'est pas un nombre valide"));
+  }
 
   // Générer un tableau de nombres aléatoires
   const numbers = Array.from({ length }).map(() => Math.floor(100 * Math.random()));

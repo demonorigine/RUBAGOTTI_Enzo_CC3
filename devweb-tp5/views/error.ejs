@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
     <link rel="stylesheet" href="/style.css" />
-    <title>Random</title>
+    <title>Error</title>
   </head>
-
-  <body>
+<body>
     <div class="center">
-      <h1><%= welcome %></h1>
-      <% numbers.forEach(element => { %>
-      <code><%= element %></code>
-      <% }) %>
+      <h1>Error <%= code %></h1>
+      <p><%= message %></p>
     </div>
+    <% if (stack != null) { %>
+    <pre><%= stack %></pre>
+    <% } %>
   </body>
-</html>

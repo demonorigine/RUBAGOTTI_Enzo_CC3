@@ -98,3 +98,10 @@ La création du dossier node_modules
 Le script de développement permet au développeur d'avoir plus de ressources pour débugger ses programmes et intéragir avec le serveur de la page web tandis que le script de production est plutôt utilisé dans une optique de production de programme, dans le sens où il est optimisé pour être plus rapide et plus réactif
 ---
 
+# 1.8) Codes HTTP pour les pages
+
+Pour chaque page, on obtient:
+
+```
+
+```

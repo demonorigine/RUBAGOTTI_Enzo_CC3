@@ -5,24 +5,25 @@ const port = 8000;
 
 import fs from "node:fs/promises";
 
-async function requestListener(_request, response) {
+async function requestListener(request, response) {
+  response.setHeader("Content-Type", "text/html");
   try {
     const contents = await fs.readFile("index.html", "utf8");
-    response.setHeader("Content-Type", "text/html");
-    response.writeHead(200);
-    response.end(contents);
-  } 
-  catch (error) {
-    console.error(error);
-    // On vérifie si le code d'erreur montre que le fichier n'existe pas
-    if (error.code === "ENOENT") {
-      response.writeHead(500);
-      response.end("Error 500: Le fichier est introuvable.");
-    } else {
-      // Pour toute autre erreur
-      response.writeHead(500);
-        response.end("Error 500: Problèmes internes au serveur.");
+    switch (request.url) {
+      case "/index.html":
+        response.writeHead(200);
+        return response.end(contents);
+      case "/random.html":
+        response.writeHead(200);
+        return response.end(`<html><p>${Math.floor(100 * Math.random())}</p></html>`);
+      default:
+        response.writeHead(404);
+        return response.end(`<html><p>404: NOT FOUND</p></html>`);
     }
+  } catch (error) {
+    console.error(error);
+    response.writeHead(500);
+    return response.end(`<html><p>500: INTERNAL SERVER ERROR</p></html>`);
   }
 }
 

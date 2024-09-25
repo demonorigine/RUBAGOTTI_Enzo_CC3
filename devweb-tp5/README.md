@@ -115,3 +115,44 @@ Code 404
 http://localhost:8000/dont-exist
 Code 404
 ```
+---
+
+# 2.1) URL des documentations
+
+La liste des différentes URL pour accéder à la documentation des modules est:
+
+```
+https://www.npmjs.com/package/express
+https://www.npmjs.com/package/http-errors
+https://www.npmjs.com/package/loglevel
+https://www.npmjs.com/package/morgan
+```
+---
+
+# 2.2) Vérification des trois routes
+
+Les routes fonctionnels sont:
+```
+http://localhost:8000/ affiche bien la page de test
+http://localhost:8000/random/:nb fonctionne
+http://localhost:8000/index.html affiche la même chose que la première route
+ ```
+
+ ---
+
+# 2.3) Entêtes d'Express
+
+La liste des entêtes est:
+```
+HTTP
+Content-Type
+Content-Lenght
+```
+
+Et le principal entête qui diffère est X-Powered-By
+
+---
+
+# 2.4) Evenement listening
+
+L'evenement listening se déclenche lorsque le serveur écoute l'adresse et le port, donc dès que le serveur est prêt à recevoir des requêtes.

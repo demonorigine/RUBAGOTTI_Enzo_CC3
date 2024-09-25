@@ -6,6 +6,9 @@ const port = 8000;
 
 const app = express();
 
+//middleware pour trouver le chemin des fichiers static
+app.use(express.static("static"));
+
 app.get(["/", "/index.html"], async function (request, response, next) {
   response.sendFile("index.html", { root: "./" });
 });

@@ -156,3 +156,21 @@ Et le principal entête qui diffère est X-Powered-By
 # 2.4) Evenement listening
 
 L'evenement listening se déclenche lorsque le serveur écoute l'adresse et le port, donc dès que le serveur est prêt à recevoir des requêtes.
+
+---
+
+# 2.5) Middleware pour gérer le static
+
+C'est l'option `index` qui permet de rediriger automatiquement la route `/` vers la route `/index.html`
+
+---
+
+# 2.6) Codes HTTP sur le fichier style.css
+
+Les différents codes renvoyés sont:
+
+```
+200 OK, car la page charge le fichier style.css.
+304 Not Modified, après le rafraîchissement simple de la page car le navigateur récupère les données mises en caches puisque le fichier a été vérifié comme n'ayant pas été modifié.
+200 OK, après le rafraîchissement forcé car le navigateur ignore à ce moment ce que contient le cache.
+```

@@ -74,3 +74,27 @@ async function requestListener(_request, response) {
         }
     }
 }
+```
+
+---
+
+# 1.6) Modifications du mode developpeur
+
+Les modifications qui ont été apportées sont :
+
+```
+La modification du dossier package.json
+
+La création du dossier package-lock.json
+
+La création du dossier node_modules
+
+```
+
+---
+
+# 1.7) Différences entre http-dev et http-prod
+
+Le script de développement permet au développeur d'avoir plus de ressources pour débugger ses programmes et intéragir avec le serveur de la page web tandis que le script de production est plutôt utilisé dans une optique de production de programme, dans le sens où il est optimisé pour être plus rapide et plus réactif
+---
+

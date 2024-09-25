@@ -1,12 +1,16 @@
 import express from "express";
 import morgan from "morgan";
 import createError from 'http-errors';
-
+import logger from "loglevel";
 
 const host = "localhost";
 const port = 8000;
 
 const app = express();
+
+
+// Fixer le niveau de verbosité
+logger.setLevel(logger.levels.WARN);
 
 // middleware pour trouver le chemin des fichiers static
 app.use(express.static("static"));
@@ -21,6 +25,7 @@ app.get("/random/:nb", async function (request, response, next) {
 
   // On vérifie si le paramètre est un nombre valide
   if (Number.isNaN(length)) {
+    logger.error("Le paramètre doit être un nombre valide");
     return next(createError(400, "Le paramètre n'est pas un nombre valide"));
   }
 
@@ -29,29 +34,38 @@ app.get("/random/:nb", async function (request, response, next) {
 
   // Message de bienvenue
   const welcome = `Voici ${length} nombres aléatoires`;
-
+  logger.info("Rendu de la page avec des nombres aléatoires");
   response.render("random", { numbers, welcome });
 });
 
-app.use((request, response, next) => {
-  concole.debug(`default route handler : ${request.url}`);
-  return next(createError(404));
-});
-
-app.use((error, _request, response, _next) => {
-  concole.debug(`default error handler: ${error}`);
-  const status = error.status ?? 500;
-  const stack = app.get("env") === "development" ? error.stack : "";
-  const result = { code: status, message: error.message, stack };
-  return response.render("error", result);
+// Middleware de gestion des erreurs
+app.use(function (err, req, res, next) {
+  if (process.env.NODE_ENV === "development") {
+    logger.debug(err); // Afficher les détails en mode développement
+    res.status(err.status || 500).send({
+      error: {
+        status: err.status || 500,
+        message: err.message,
+        stack: err.stack,
+      },
+    });
+  } else {
+    logger.warn("Une erreur s'est produite, message renvoyé à l'utilisateur");
+    res.status(err.status || 500).send({
+      error: {
+        status: err.status || 500,
+        message: "Une erreur est survenue",
+      },
+    });
+  }
 });
 
 const server = app.listen(port, host);
 
 server.on("listening", () =>
-  console.info(
+  logger.info(
     `HTTP listening on http://${server.address().address}:${server.address().port} with mode '${process.env.NODE_ENV}'`,
   ),
 );
 
-console.info(`File ${import.meta.url} executed.`);
+logger.debug(`File ${import.meta.url} executed.`);
